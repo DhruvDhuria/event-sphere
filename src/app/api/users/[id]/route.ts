@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import dbConnect from "@/lib/dbConnect";
 import { cloudinaryHelper } from "@/helpers/cloudinaryHelper";
 import User from "@/models/User";
+import { clerkClient } from "@clerk/nextjs/server";
 
 await dbConnect();
 
@@ -69,9 +70,10 @@ export async function PATCH(
   }
 }
 
-export async function GET({ params }: { params: { id: string } }) {
+export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const user = await User.findById(params.id);
+    const {id} = await params;
+    const user = await User.findById(id);
     
     if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
@@ -93,10 +95,21 @@ export async function GET({ params }: { params: { id: string } }) {
 }
 
 
-export async function DELETE({params}:{params: {id: string}}) {
+export async function DELETE(request: NextRequest, {params}:{params: {id: string}}) {
   try {
-    await User.findByIdAndDelete(params.id)
-    return NextResponse.json({message: "User deleted successfully"}, {status: 200})
+    const {id} = await params;
+    const client = await clerkClient()
+
+    const clerkUser = await User.findById(id)
+
+    if (!clerkUser) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    }
+
+    const response = await client.users.deleteUser(clerkUser.clerkId)   
+    await User.findByIdAndDelete(id)
+
+    return NextResponse.json({message: "User deleted successfully", res: response}, {status: 200})
   } catch (error) {
     console.error("Unexpected error:", error);
     return NextResponse.json(
