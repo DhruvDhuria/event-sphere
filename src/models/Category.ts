@@ -2,6 +2,7 @@ import mongoose, {Schema, Document} from "mongoose";
 
 export interface Category extends Document {
     name: string;
+    _id: string;
     description?: string;
     image?: string;
 }

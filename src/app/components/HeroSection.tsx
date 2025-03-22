@@ -3,6 +3,7 @@ import React from "react";
 import { cn } from "@/lib/utils";
 import SearchBar from "./SearchBar";
 import Button from "./Button";
+import Link from "next/link";
 
 interface HeroSectionProps {
   className?: string;
@@ -46,7 +47,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ className }) => {
         <div className="flex flex-wrap justify-center gap-3">
           <Button size="lg">Explore All Events</Button>
           <Button size="lg" variant="outline">
-            Create Event
+            <Link href={"/create-event"}>Create Event</Link>
           </Button>
         </div>
 

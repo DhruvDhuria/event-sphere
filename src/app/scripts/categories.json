@@ -1,0 +1,59 @@
+[
+  {
+    "name": "Arts & Culture",
+    "description": "Art exhibitions, cultural performances, museum visits, and more."
+  },
+  {
+    "name": "Music",
+    "description": "Concerts, live music performances, music festivals, and jam sessions."
+  },
+  {
+    "name": "Sports & Fitness",
+    "description": "Sports events, fitness classes, yoga sessions, and outdoor activities."
+  },
+  {
+    "name": "Food & Drink",
+    "description": "Food festivals, cooking classes, wine tastings, and restaurant events."
+  },
+  {
+    "name": "Community & Social",
+    "description": "Community gatherings, social events, meetups, and networking events."
+  },
+  {
+    "name": "Education & Workshops",
+    "description": "Workshops, seminars, lectures, educational events, and skill-building sessions."
+  },
+  {
+    "name": "Festivals & Fairs",
+    "description": "Local festivals, craft fairs, holiday markets, and seasonal events."
+  },
+  {
+    "name": "Outdoor & Nature",
+    "description": "Hiking, nature walks, outdoor adventures, and environmental events."
+  },
+  {
+    "name": "Family & Kids",
+    "description": "Family-friendly events, children's activities, and kid-focused workshops."
+  },
+  {
+    "name": "Business & Networking",
+    "description": "Networking events, business workshops, conferences, and industry meetups."
+  },
+  {
+    "name": "Theatre & Shows",
+    "description": "Plays, musicals, dance performances, and theatrical productions."
+  },
+  {
+    "name": "Charity & Volunteering",
+    "description": "Charity events, volunteer opportunities, and fundraising initiatives."
+  },
+  {
+    "name": "Technology",
+    "description": "Tech meetups, coding workshops, and technology conferences."
+  },
+  {
+    "name": "Games",
+    "description": "Board game nights, video game tournaments, and role-playing game sessions."
+  }
+]
+

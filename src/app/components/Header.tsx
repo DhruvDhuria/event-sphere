@@ -1,14 +1,16 @@
-"use client";
+'use client'
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { Search, Menu, X } from "lucide-react";
 import Button from "./Button";
 import { cn } from "@/lib/utils";
 
+
 const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
+  
+  
   // Navigation items
   const navItems = [
     { name: "Discover", path: "/" },
@@ -67,9 +69,11 @@ const Header: React.FC = () => {
             <Search size={18} />
           </button>
           <Button size="sm" variant="outline">
-            Sign In
+            <Link href={"/sign-in"}>Sign In</Link>
           </Button>
-          <Button size="sm">Create Account</Button>
+          <Button size="sm">
+            <Link href={"/sign-up"}>Create Account</Link>
+          </Button>
         </div>
 
         {/* Mobile Menu Button */}

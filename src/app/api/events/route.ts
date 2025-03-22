@@ -1,8 +1,9 @@
 import dbConnect from "@/lib/dbConnect";
 import { NextResponse, NextRequest } from "next/server";
 import Event from "@/models/Event";
-import { useRouter } from "next/navigation";
+import User from "@/models/User";
 import { auth } from "@clerk/nextjs/server";
+import { geocodeAddress } from "@/lib/geocoding";
 
 dbConnect();
 
@@ -11,14 +12,14 @@ export async function POST(req: NextRequest) {
     // if user is not authenticated, return error
     // else take the data from the formdata 
     // validate if the data is correct
+    // get geocode coordinates from address using geocodeAddress function
     // if data is correct, create the event
     // if data is not correct, return error
     // return the event
 
     const {userId} = await auth();
-    const router = useRouter();
-
-    if (!userId) router.push("/sign-in");
+    const user = await User.find({clerkId: userId}).exec();
+    
 
     const formdata = await req.formData();
     const title = formdata.get("title") as string;
@@ -34,15 +35,28 @@ export async function POST(req: NextRequest) {
     }
 
     try {
+
+        const coordinates = await geocodeAddress(location as string);
+        if (!coordinates){
+            return NextResponse.json({ error: "Location not found" }, { status: 400 });
+        }
+
+        const { latitude, longitude } = coordinates;
+        const locationData = {
+            address: location,
+            latitude,
+            longitude,
+        };
+        
         const event = await Event.create({
             title,
             description,
-            location,
+            location: locationData,
             time,
             category,
             date,
             image,
-            organizerId: userId
+            organizerId: user[0]._id
         });
         return NextResponse.json(event, { status: 201 });
     } catch (error) {

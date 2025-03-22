@@ -24,10 +24,10 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ) => {
     const variantClasses = {
       primary:
-        "bg-primary text-primary-foreground shadow-sm hover:bg-primary/90",
+        "bg-foreground text-background shadow-sm hover:bg-primary/90",
       secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
       outline:
-        "border border-input text-foreground bg-background hover:bg-accent hover:text-accent-foreground",
+        "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
       ghost: "hover:bg-accent hover:text-accent-foreground",
     };
 
