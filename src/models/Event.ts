@@ -9,7 +9,7 @@ export interface Event extends Document {
         longitude: number;
     };
     time: string;
-    category: string;
+    category: mongoose.Types.ObjectId;
     date: Date;
     image: string;
     organizerId: mongoose.Types.ObjectId;
@@ -45,7 +45,7 @@ const eventschema = new Schema<Event>({
     required: [true, "Time is required"],
   },
   category: {
-    type: String,
+    type: Schema.Types.ObjectId,
     required: [true, "Category is required"],
   },
   date: {

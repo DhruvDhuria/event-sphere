@@ -4,6 +4,7 @@ import Event from "@/models/Event";
 import User from "@/models/User";
 import { auth } from "@clerk/nextjs/server";
 import { geocodeAddress } from "@/lib/geocoding";
+import { date } from "zod";
 
 dbConnect();
 
@@ -82,55 +83,104 @@ export async function POST(req: NextRequest) {
 
 export async function GET(req: NextRequest) {
   try {
-    console.log("Request started");
     const search = req.nextUrl.searchParams.get("search");
     const page = parseInt(req.nextUrl.searchParams.get("page") as string) || 1;
-
-    console.log("parsed values", page, search);
+    const pageSize = 10; // Number of events per page
 
     if (isNaN(page) || page < 1) {
-      console.log("Invalid page parameter");
       return NextResponse.json(
         { error: "Invalid page parameter" },
         { status: 400 }
       );
     }
 
-    console.log("About to check search condition");
+    // Base pipeline that's common to both queries
+    const basePipeline = [];
 
+    // Search match stage if search parameter exists
     if (search && search.trim() !== "") {
-      console.log("Executing search query");
-      try {
-        const events = await Event.find({
+      basePipeline.push({
+        $match: {
           $or: [
             { title: { $regex: search, $options: "i" } },
-            { category: { $regex: search, $options: "i" } },
-            { location: { $regex: search, $options: "i" } },
+            { "location.address": { $regex: search, $options: "i" } },
           ],
-        })
-          .skip((page - 1) * 10)
-          .limit(10);
-        console.log("Search query completed");
-        return NextResponse.json(events, { status: 200 });
-      } catch (dbError) {
-        console.error("DB search error:", dbError);
-        throw dbError;
-      }
-    } else {
-      console.log("Executing regular query");
-      try {
-        const events = await Event.find()
-          .skip((page - 1) * 10)
-          .limit(10);
-        console.log("Regular query completed, found", events.length, "events");
-        return NextResponse.json(events, { status: 200 });
-      } catch (dbError) {
-        console.error("DB regular query error:", dbError);
-        throw dbError;
-      }
+        },
+      });
     }
+
+    // Add lookups and field processing
+    basePipeline.push(
+      {
+        $lookup: {
+          from: "users",
+          localField: "organizerId",
+          foreignField: "_id",
+          as: "organizer",
+        },
+      },
+      {
+        $lookup: {
+          from: "categories",
+          localField: "category",
+          foreignField: "_id",
+          as: "category",
+        },
+      },
+      {
+        $addFields: {
+          organizer: { $arrayElemAt: ["$organizer", 0] },
+          category: { $arrayElemAt: ["$category", 0] },
+        },
+      },
+      {
+        $project: {
+          "organizer.username": 1,
+          "organizer.email": 1,
+          "category.name": 1,
+          title: 1,
+          description: 1,
+          date: 1,
+          time: 1,
+          location: 1,
+          image: 1,
+          createdAt: 1,
+          updatedAt: 1,
+        },
+      }
+    );
+
+    // Use $facet to perform both the pagination and count in a single operation
+    const result = await Event.aggregate([
+      ...basePipeline,
+      {
+        $facet: {
+          paginatedResults: [
+            { $skip: (page - 1) * pageSize },
+            { $limit: pageSize },
+          ],
+          totalCount: [{ $count: "count" }],
+        },
+      },
+    ]);
+
+    const events = result[0].paginatedResults;
+    const totalEvents =
+      result[0].totalCount.length > 0 ? result[0].totalCount[0].count : 0;
+
+    return NextResponse.json(
+      {
+        events,
+        pagination: {
+          currentPage: page,
+          totalPages: Math.ceil(totalEvents / pageSize),
+          totalEvents,
+        },
+      },
+      { status: 200 }
+    );
   } catch (error) {
-    console.error("Final error catch:", error);
+    console.error("Error:", error);
     return NextResponse.json(
       {
         error: "Something went wrong while fetching events",
