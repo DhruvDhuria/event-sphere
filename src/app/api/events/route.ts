@@ -4,19 +4,11 @@ import Event from "@/models/Event";
 import User from "@/models/User";
 import { auth } from "@clerk/nextjs/server";
 import { geocodeAddress } from "@/lib/geocoding";
-import { date } from "zod";
+import { cloudinaryHelper } from "@/helpers/cloudinaryHelper";
 
 dbConnect();
 
 export async function POST(req: NextRequest) {
-  // check if user is authenticated to create event using clerk auth() method
-  // if user is not authenticated, return error
-  // else take the data from the formdata
-  // validate if the data is correct
-  // get geocode coordinates from address using geocodeAddress function
-  // if data is correct, create the event
-  // if data is not correct, return error
-  // return the event
 
   const { userId } = await auth();
   const user = await User.find({ clerkId: userId }).exec();
@@ -61,6 +53,8 @@ export async function POST(req: NextRequest) {
       longitude,
     };
 
+    const cloudinaryResult =await cloudinaryHelper(image as File);
+
     const event = await Event.create({
       title,
       description,
@@ -68,7 +62,7 @@ export async function POST(req: NextRequest) {
       time,
       category,
       date,
-      image,
+      image: cloudinaryResult.secure_url,
       organizerId: user[0]._id,
     });
     return NextResponse.json(event, { status: 201 });

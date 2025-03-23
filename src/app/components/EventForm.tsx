@@ -73,7 +73,7 @@ const EventForm: React.FC<EventFormProps> = ({
       time: defaultValues?.time || "",
       location: defaultValues?.location || "",
       category: defaultValues?.category || "",
-      image: defaultValues?.image || "",
+
     },
   });
 
@@ -175,9 +175,7 @@ const EventForm: React.FC<EventFormProps> = ({
                                 )}
                               >
                                 {field.value ? (
-                                  <span>
-                                    {format(field.value, "PPP")}
-                                  </span>
+                                  <span>{format(field.value, "PPP")}</span>
                                 ) : (
                                   <span>Pick a date</span>
                                 )}
@@ -185,7 +183,10 @@ const EventForm: React.FC<EventFormProps> = ({
                               </Button>
                             </FormControl>
                           </PopoverTrigger>
-                          <PopoverContent className="w-auto p-0 bg-background" align="start">
+                          <PopoverContent
+                            className="w-auto p-0 bg-background"
+                            align="start"
+                          >
                             <Calender
                               mode="single"
                               selected={field.value}
@@ -289,11 +290,23 @@ const EventForm: React.FC<EventFormProps> = ({
                       <div className="flex items-center">
                         <ImageIcon className="w-4 h-4 mr-2 text-muted-foreground" />
                         <FormControl>
-                          <Input type="file" placeholder="Enter image" {...field} />
+                          <Input
+                            type="file"
+                            placeholder="Select an image"
+                            onChange={(e) => {
+                              const files = e.target.files;
+                              if (files?.length) {
+                                field.onChange(files[0]);
+                              }
+                            }}
+                            onBlur={field.onBlur}
+                            name={field.name}
+                            ref={field.ref}
+                          />
                         </FormControl>
                       </div>
                       <FormDescription>
-                        Provide a URL to an image that represents your event
+                        Upload an image that represents your event
                       </FormDescription>
                       <FormMessage />
                     </FormItem>
