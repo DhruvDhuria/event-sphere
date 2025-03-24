@@ -5,19 +5,18 @@ import { cn } from "@/lib/utils";
 
 interface SearchBarProps {
   className?: string;
-  onSearch?: (searchTerm: string, location: string, date: string) => void;
+  onSearch?: (searchTerm: string, date: string) => void;
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({ className, onSearch }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [location, setLocation] = useState("");
   const [date, setDate] = useState("");
   const searchBarRef = useRef<HTMLDivElement>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSearch && onSearch(searchTerm, location, date);
+    onSearch && onSearch(searchTerm,  date);
   };
 
   useEffect(() => {
@@ -71,20 +70,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ className, onSearch }) => {
               onFocus={() => setIsExpanded(true)}
             />
           </div>
-
-          {/* Location Input - Only visible when expanded */}
-          {isExpanded && (
-            <div className="flex items-center flex-grow px-4 py-3 border-b md:border-b-0 md:border-r border-gray-100 w-full">
-              <MapPin className="h-5 w-5 text-gray-400 mr-2" />
-              <input
-                type="text"
-                placeholder="Location"
-                className="w-full outline-none text-gray-700 placeholder-gray-400 bg-transparent"
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
-              />
-            </div>
-          )}
+         
 
           {/* Date Input - Only visible when expanded */}
           {isExpanded && (

@@ -10,10 +10,9 @@ const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   
-  
   // Navigation items
   const navItems = [
-    { name: "Discover", path: "/" },
+    { name: "Discover", path: "/discover-events" },
     { name: "Categories", path: "/categories" },
     { name: "Featured", path: "/featured" },
     { name: "About", path: "/about" },

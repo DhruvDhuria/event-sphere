@@ -1,35 +1,33 @@
 "use client";
 import React from "react";
-import { Calendar, MapPin, Clock, Star } from "lucide-react";
+import { Calendar, MapPin, Clock } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
 export interface EventCardProps {
-  id: string;
+  _id: string;
   title: string;
   date: string;
   time: string;
   location: string;
   image: string;
   category: string;
-  isFeatured?: boolean;
   className?: string;
 }
 
 const EventCard: React.FC<EventCardProps> = ({
-  id,
+  _id,
   title,
   date,
   time,
   location,
   image,
   category,
-  isFeatured = false,
   className,
 }) => {
   return (
     <Link
-      href={`/event/${id}`}
+      href={`/event/${_id}`}
       className={cn(
         "group relative flex flex-col overflow-hidden rounded-xl bg-white hover-lift",
         "border border-gray-200/60 transition-all duration-300 h-full",
@@ -51,15 +49,6 @@ const EventCard: React.FC<EventCardProps> = ({
             {category}
           </span>
         </div>
-        {/* Featured Badge */}
-        {isFeatured && (
-          <div className="absolute top-3 right-3 z-20">
-            <div className="flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-yellow-400/90 backdrop-blur-sm text-gray-800">
-              <Star className="w-3 h-3" />
-              <span>Featured</span>
-            </div>
-          </div>
-        )}
       </div>
 
       {/* Event Details */}
