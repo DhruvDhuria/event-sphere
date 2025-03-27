@@ -4,24 +4,7 @@ import EventCard from "@/app/components/EventCard";
 import SearchBar from "../components/SearchBar";
 import Button from "../components/Button";
 
-// Mock categories data
-const categories = [
-    "Arts & Culture",  
-    "Music",
-    "Sports & Fitness",    
-    "Food & Drink",   
-    "Community & Social",
-    "Education & Workshops",
-    "Festivals & Fairs",
-    "Outdoor & Nature",
-    "Family & Kids",
-    "Business & Networking",
-    "Theatre & Shows",
-    "Charity & Volunteering",
-    "Technology",
-    "Games",
-];
-interface Events {
+export interface Events {
   _id: string;
   title: string;
   date: string;
