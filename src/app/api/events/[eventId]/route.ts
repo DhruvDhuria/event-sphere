@@ -63,7 +63,7 @@ export async function GET(req: NextRequest, {params}: {params: Promise<{eventId:
     }
 }
 
-export async function DELETE( {params}: {params: Promise<{eventId: string}>}) {
+export async function DELETE(req: NextRequest, {params}: {params: Promise<{eventId: string}>}) {
     // delete event based on event id
     const {eventId} = await params
     try {
