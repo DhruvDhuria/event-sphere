@@ -5,9 +5,9 @@ import Category from "@/models/Category";
 
 dbConnect();
 
-export async function GET(req: NextRequest, { params }: { params: { categoryId: string } }) {
+export async function GET(req: NextRequest, { params }: { params: Promise<{ categoryId: string }> }) {
     try {
-        const { categoryId } = params;
+        const { categoryId } = await params;
         const category = await Category.findById(categoryId)
         if (!category){
             return NextResponse.json({error: "cannot find category"}, {status: 404})
