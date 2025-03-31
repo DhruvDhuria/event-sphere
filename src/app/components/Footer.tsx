@@ -48,7 +48,7 @@ const Footer: React.FC = () => {
             </Link>
             <p className="mt-4 text-gray-600 max-w-md">
               Discover and join amazing local events. Connect with your
-              community and never miss out on what's happening around you.
+              community and never miss out on what&apos;s happening around you.
             </p>
           </div>
 

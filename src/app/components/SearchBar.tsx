@@ -16,7 +16,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ className, onSearch }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSearch && onSearch(searchTerm,  date);
+    if (onSearch) onSearch(searchTerm,  date);
   };
 
   useEffect(() => {
@@ -33,7 +33,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ className, onSearch }) => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  });
 
   return (
     <div

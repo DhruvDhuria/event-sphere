@@ -37,7 +37,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ className }) => {
 
         <p className="max-w-2xl mx-auto text-xl text-gray-600 mb-8">
           Connect with your community and discover local events that match your
-          interests. Never miss out on what's happening around you.
+          interests. Never miss out on what&apos;s happening around you.
         </p>
 
         <div className="max-w-2xl mx-auto mb-8">
@@ -46,7 +46,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ className }) => {
 
         <div className="flex flex-wrap justify-center gap-3">
           <Button size="lg">
-            <Link href={'/discover-events'}>Explore All Events</Link>
+            <Link href={"/discover-events"}>Explore All Events</Link>
           </Button>
           <Button size="lg" variant="outline">
             <Link href={"/create-event"}>Create Event</Link>
@@ -56,7 +56,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ className }) => {
         <div className="mt-12 flex justify-center">
           <p className="text-sm text-gray-500 flex items-center gap-2">
             <span className="inline-block w-2 h-2 rounded-full bg-green-400"></span>
-            5,000+ events happening this week
+            5000+ events happening this week
           </p>
         </div>
       </div>
