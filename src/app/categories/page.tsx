@@ -7,6 +7,7 @@ interface CategoryCardProps {
     _id: string;
     description: string;
     name: string;
+    image: string;
 }
 
 const Page = () => {
@@ -46,6 +47,7 @@ const Page = () => {
                   id={category._id}
                   key={category.name}
                   name={category.name}
+                  image={category.image}
                 />
               ))}
             </div>

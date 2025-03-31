@@ -1,8 +1,11 @@
 "use client";
 import React from "react";
 import EventForm from "../components/EventForm";
+import { useRouter } from "next/navigation";
 
 const CreateEvent: React.FC = () => {
+
+  const router = useRouter()
   const handleSubmit = (data: any) => {
 
      const formData = new FormData();
@@ -20,6 +23,7 @@ const CreateEvent: React.FC = () => {
       .then((response) => response.json())
       .then((result) => {
         console.log("Event created:", result);
+        router.push(`/event/${result._id}`)
       })
       .catch((error) => {
         console.error("Error creating event:", error);

@@ -12,6 +12,9 @@ export async function POST(req: NextRequest) {
 
   const { userId } = await auth();
   const user = await User.find({ clerkId: userId }).exec();
+  if (!user) {
+    return NextResponse.json("user not found")
+  }
 
   const formdata = await req.formData();
   const title = formdata.get("title") as string;

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import EventCard from "@/app/components/EventCard";
 import SearchBar from "../components/SearchBar";
 import Button from "../components/Button";
+import Link from "next/link";
 
 export interface Events {
   _id: string;
@@ -24,14 +25,17 @@ export interface Events {
 const DiscoverEvents: React.FC = () => {
 
   const [events, setEvents] = useState<Events[]>([])
+  const [isLoading, setIsLoading] = useState(true)
 
   const fetchEvents = async (searchTerm?: string) => {
+    setIsLoading(true)
     try {
       const searchedEvents = searchTerm
         ? await fetch(`/api/events?search=${searchTerm}`)
         : await fetch(`/api/events`);
       const data = await searchedEvents.json();
       setEvents(data.events);
+      setIsLoading(false)
     } catch (error) {
       console.error("Error fetching events:", error);
     }
@@ -69,7 +73,7 @@ const DiscoverEvents: React.FC = () => {
               <SearchBar className="mb-6" onSearch={handleSearch} />
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {!isLoading? <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {events.map((event) => (
                 <EventCard
                   key={event._id}
@@ -82,11 +86,7 @@ const DiscoverEvents: React.FC = () => {
                   category={event.category.name}
                 />
               ))}
-            </div>
-
-            <div className="mt-12 text-center">
-              <Button>Load More Events</Button>
-            </div>
+            </div>: <div className="text-2xl font-semibold max-w-2xs mx-auto">Fetching Events...</div>}
           </div>
         </section>
 
@@ -102,13 +102,7 @@ const DiscoverEvents: React.FC = () => {
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Button className="bg-white text-black hover:bg-white/90">
-                Create Event
-              </Button>
-              <Button
-                variant="outline"
-                className="border-white text-black hover:bg-white/10 hover:text-white"
-              >
-                Learn More
+                <Link href={"/create-event"}>Create Event</Link>
               </Button>
             </div>
           </div>

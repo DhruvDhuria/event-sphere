@@ -96,7 +96,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ className, onSearch }) => {
             <button
               type="submit"
               className={cn(
-                "rounded-full bg-primary text-white font-medium transition-all",
+                "rounded-full bg-foreground text-white font-medium transition-all",
                 isExpanded ? "w-full py-2 px-6" : "p-2"
               )}
             >

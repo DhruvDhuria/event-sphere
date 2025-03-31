@@ -15,7 +15,7 @@ const CategoryEvents = ({categoryId}: {categoryId: string}) => {
     const fetchEvents = async () => {
       console.log("Inside fetchevents", categoryId)
         try {
-          const response = await fetch(`/api/categories/67dd3b63e6ad1bbad2c28082`);
+          const response = await fetch(`/api/categories/${categoryId}`);
           console.log(response)
           const searchedEvents = await response.json()
           console.log("helllo", categoryId)

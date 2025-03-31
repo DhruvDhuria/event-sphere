@@ -10,6 +10,7 @@ import icon from "leaflet/dist/images/marker-icon.png";
 import iconShadow from "leaflet/dist/images/marker-shadow.png";
 
 
+
 let DefaultIcon = L.icon({
   iconUrl: icon.src,
   shadowUrl: iconShadow.src,
@@ -17,7 +18,7 @@ let DefaultIcon = L.icon({
   iconAnchor: [12, 41],
 });
 
-L.marker.prototype.options.icons = DefaultIcon;
+L.Marker.prototype.options.icon = DefaultIcon;
 
 const Map = ({
   latitude,
@@ -28,8 +29,16 @@ const Map = ({
   longitude: number;
   eventName: string;
 }) => {
+
+   if (latitude === undefined || longitude === undefined) {
+     return (
+       <div style={{ height: "400px", width: "100%" }}>Loading map...</div>
+     );
+   }
+
   const position: [number, number] = [latitude, longitude];
 
+  console.log("latitude: ",latitude, "longitude: ", longitude)
   return (
     <div style={{ height: "400px", width: "100%" }}>
       <MapContainer

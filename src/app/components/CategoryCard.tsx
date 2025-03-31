@@ -36,14 +36,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
           className="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105"
           loading="lazy"
         />
-
-        {/* Category Icon on Top */}
-        <div className="absolute top-0 left-0 right-0 flex items-center justify-center p-4 z-20">
-          <div className="bg-white/90 backdrop-blur-sm text-primary p-3 rounded-full">
-            {icon}
-          </div>
-        </div>
-
+        
         {/* Category Name */}
         <div className="absolute bottom-0 left-0 right-0 p-4 z-20">
           <h3 className="text-xl font-bold text-white">{name}</h3>

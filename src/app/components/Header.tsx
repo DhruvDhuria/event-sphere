@@ -4,17 +4,19 @@ import Link from "next/link";
 import { Search, Menu, X } from "lucide-react";
 import Button from "./Button";
 import { cn } from "@/lib/utils";
+import { useUser, SignOutButton } from "@clerk/nextjs";
 
 
 const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   
+  const {isSignedIn} = useUser()
   // Navigation items
   const navItems = [
+    { name: "Home", path: "/"},
     { name: "Discover", path: "/discover-events" },
     { name: "Categories", path: "/categories" },
-    { name: "Featured", path: "/featured" },
     { name: "About", path: "/about" },
   ];
 
@@ -60,19 +62,21 @@ const Header: React.FC = () => {
         </nav>
 
         {/* Search & Sign In (Desktop) */}
-        <div className="hidden md:flex items-center space-x-4">
-          <button
-            className="p-2 rounded-full bg-secondary text-gray-700 hover:bg-secondary/80 transition-colors"
-            aria-label="Search"
-          >
-            <Search size={18} />
-          </button>
-          <Button size="sm" variant="outline">
-            <Link href={"/sign-in"}>Sign In</Link>
-          </Button>
-          <Button size="sm">
-            <Link href={"/sign-up"}>Create Account</Link>
-          </Button>
+        <div>
+          {!isSignedIn ? (
+            <div className="hidden md:flex items-center space-x-4">
+              <Button size="sm" variant="outline">
+                <Link href={"/sign-in"}>Sign In</Link>
+              </Button>
+              <Button size="sm">
+                <Link href={"/sign-up"}>Create Account</Link>
+              </Button>
+            </div>
+          ) : (
+            <div className="bg-black text-white px-3 py-2 rounded-lg hover:text-gray-500">
+              <SignOutButton redirectUrl="/" />
+            </div>
+          )}
         </div>
 
         {/* Mobile Menu Button */}

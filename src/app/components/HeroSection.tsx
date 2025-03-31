@@ -45,7 +45,9 @@ const HeroSection: React.FC<HeroSectionProps> = ({ className }) => {
         </div>
 
         <div className="flex flex-wrap justify-center gap-3">
-          <Button size="lg">Explore All Events</Button>
+          <Button size="lg">
+            <Link href={'/discover-events'}>Explore All Events</Link>
+          </Button>
           <Button size="lg" variant="outline">
             <Link href={"/create-event"}>Create Event</Link>
           </Button>
