@@ -73,8 +73,8 @@ const CategoryEvents = ({categoryId}: {categoryId: string}) => {
               <div className="text-center py-16">
                 <h3 className="text-xl font-semibold mb-2">No events found</h3>
                 <p className="text-gray-600 mb-6">
-                  We couldn't find any {categoryName.toLowerCase()}{" "}
-                  events at the moment.
+                  We couldn&apos;t find any {categoryName.toLowerCase()} events
+                  at the moment.
                 </p>
                 <Link href="/categories">
                   <Button variant="outline">Browse Other Categories</Button>
@@ -84,7 +84,6 @@ const CategoryEvents = ({categoryId}: {categoryId: string}) => {
           </div>
         </section>
       </main>
-
     </div>
   );
 };
