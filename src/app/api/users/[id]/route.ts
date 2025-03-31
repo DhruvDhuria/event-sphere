@@ -28,7 +28,6 @@ export async function PATCH(
         const publicId = cloudinaryUploadResult.public_id;
 
         await User.findByIdAndUpdate(params.id, { profilePicture: publicId });
-        console.log("profile updated successfully");
 
         // Return early if we only had a file
         if (!bio) {
@@ -49,7 +48,6 @@ export async function PATCH(
     if (bio) {
       try {
         await User.findByIdAndUpdate(params.id, { bio });
-        console.log("bio updated successfully");
         return NextResponse.json({ message: "Bio updated successfully" });
       } catch (error) {
         console.error("Error updating bio:", error);

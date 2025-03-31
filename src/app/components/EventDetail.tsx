@@ -1,13 +1,8 @@
 "use client"
 import React, { useEffect, useState } from "react";
-import Link from "next/link";
-import { Calendar, Clock, MapPin, Share2, Heart, Users } from "lucide-react";
+import { Calendar, Clock, MapPin, Share2, Heart } from "lucide-react";
 import Button from "./Button";
-// import Map from "./Map";
 import dynamic from "next/dynamic";
-
-
-// Mock event data - in a real app, you would fetch this data based on the event ID
 
 interface EventData {
     id: string
@@ -37,25 +32,18 @@ const EventDetail= ({eventId}: {eventId: string}) => {
   
 const DynamicMap = dynamic(() => import("./Map"), { ssr: false });
 
-  // In a real app, you would fetch the event data here
-  // const { data: event, isLoading, error } = useQuery(['event', id], () => fetchEvent(id));
-
-  // For now, we'll just use the mock data
   const [event, setEvent] = useState<EventData>() || {}
 
   const fetchEventData = async() => {
     try {
-        console.log("hello")
         const response = await fetch(`/api/events/${eventId}`)
         const data = await response.json()
         setEvent(data[0])
-        console.log("This is data", event?.location)
     } catch (error) {
         console.log(error)
     }
   }
 
-  console.log("location", event)
   useEffect(() => {
     fetchEventData()
   }, [])
@@ -64,7 +52,6 @@ const DynamicMap = dynamic(() => import("./Map"), { ssr: false });
   return (
     <div className="min-h-screen flex flex-col">
       <main>
-        {/* Event Hero */}
         <div className="relative w-full h-[40vh] md:h-[50vh] lg:h-[60vh]">
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-black/20 z-10" />
           <img
@@ -122,9 +109,6 @@ const DynamicMap = dynamic(() => import("./Map"), { ssr: false });
             <div className="glass-panel p-6">
               <h2 className="text-2xl font-semibold mb-4">Organizer</h2>
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-gray-200 rounded-full overflow-hidden">
-                  {/* Organizer avatar placeholder */}
-                </div>
                 <div>
                   <h3 className="font-medium">{event?.organizer.username}</h3>
                   <p className="text-sm text-gray-600">Event Organizer</p>

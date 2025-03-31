@@ -10,15 +10,10 @@ import Link from "next/link";
 const CategoryEvents = ({categoryId}: {categoryId: string}) => {
     const [events, setEvents] = useState<Events[]>([])
     const [categoryName, setCategoryName] = useState("")
-
-    // console.log("helodifoseio")
     const fetchEvents = async () => {
-      console.log("Inside fetchevents", categoryId)
         try {
           const response = await fetch(`/api/categories/${categoryId}`);
-          console.log(response)
           const searchedEvents = await response.json()
-          console.log("helllo", categoryId)
           setEvents(searchedEvents.events)
           setCategoryName(searchedEvents.categoryName)
         } catch (error) {

@@ -22,7 +22,6 @@ const CreateEvent: React.FC = () => {
     })
       .then((response) => response.json())
       .then((result) => {
-        console.log("Event created:", result);
         router.push(`/event/${result._id}`)
       })
       .catch((error) => {

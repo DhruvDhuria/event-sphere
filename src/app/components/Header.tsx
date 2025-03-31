@@ -1,7 +1,7 @@
 'use client'
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { Search, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import Button from "./Button";
 import { cn } from "@/lib/utils";
 import { useUser, SignOutButton } from "@clerk/nextjs";

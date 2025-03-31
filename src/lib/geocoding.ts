@@ -2,7 +2,6 @@ async function geocodeAddress(
   address: string
 ): Promise<{ latitude: number; longitude: number } | null> {
   const encodedAddress = encodeURIComponent(address);
-  console.log(encodedAddress)
   
   const url = `https://api.olamaps.io/places/v1/geocode?address=${encodedAddress}&api_key=${process.env.OLA_MAPS_API_KEY}`;
 
@@ -15,13 +14,12 @@ async function geocodeAddress(
     const data: any = await response.json();
 
     if (data) {
-      console.log(data.geometry)
       return {
         latitude: parseFloat(data.geocodingResults[0].geometry.location.lat),
         longitude: parseFloat(data.geocodingResults[0].geometry.location.lng),
       };
     } else {
-      console.error("Geocoding failed: No results found.", data.geocodingResults[0].geometry.location);
+      console.error("Geocoding failed: No results found.", data);
       return null;
     }
   } catch (error) {
@@ -35,13 +33,3 @@ async function geocodeAddress(
 }
 
 export {geocodeAddress};
-
-// Example usage:
-// geocodeAddress("1600 Amphitheatre Parkway, Mountain View, CA").then(
-//   (coordinates) => {
-//     if (coordinates) {
-//       console.log("Latitude:", coordinates.latitude);
-//       console.log("Longitude:", coordinates.longitude);
-//     }
-//   }
-// );

@@ -38,7 +38,6 @@ const Map = ({
 
   const position: [number, number] = [latitude, longitude];
 
-  console.log("latitude: ",latitude, "longitude: ", longitude)
   return (
     <div style={{ height: "400px", width: "100%" }}>
       <MapContainer
