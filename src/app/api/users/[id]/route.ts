@@ -68,7 +68,7 @@ export async function PATCH(
   }
 }
 
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const {id} = await params;
     const user = await User.findById(id);

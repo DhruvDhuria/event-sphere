@@ -6,7 +6,7 @@ import mongoose from "mongoose";
 
 dbConnect();
 
-export async function GET(req: NextRequest, {params}: {params: {eventId: string}}) {
+export async function GET(req: NextRequest, {params}: {params: Promise<{eventId: string}>}) {
     // get event details based on event id
     try {
         const {eventId} = await params

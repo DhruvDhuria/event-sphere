@@ -1,7 +1,7 @@
 import CategoryEvents from "@/app/components/CategoryEvents";
 import React from "react";
 
-const Page = async ({ params }: { params: { categoryId: string } }) => {
+const Page = async ({ params }: { params: Promise<{ categoryId: string }> }) => {
   const {categoryId} = await params
 
   return (
