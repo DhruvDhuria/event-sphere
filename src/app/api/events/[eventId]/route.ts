@@ -63,10 +63,11 @@ export async function GET(req: NextRequest, {params}: {params: Promise<{eventId:
     }
 }
 
-export async function DELETE( {params}: {params: {eventId: string}}) {
+export async function DELETE( {params}: {params: Promise<{eventId: string}>}) {
     // delete event based on event id
+    const {eventId} = await params
     try {
-        await Event.findByIdAndDelete(params.eventId);
+        await Event.findByIdAndDelete(eventId);
         return NextResponse.json({ message: "Event deleted successfully" }, { status: 200 });
     } catch (error) {
         return NextResponse.json({ error: "Something went wrong while deleting event" }, { status: 500 });

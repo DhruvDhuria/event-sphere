@@ -8,8 +8,9 @@ await dbConnect();
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const {id} = await params
   try {
     const formData = await request.formData();
     const file = formData.get("file") as File | null;
@@ -27,7 +28,7 @@ export async function PATCH(
         const cloudinaryUploadResult = await cloudinaryHelper(file);
         const publicId = cloudinaryUploadResult.public_id;
 
-        await User.findByIdAndUpdate(params.id, { profilePicture: publicId });
+        await User.findByIdAndUpdate(id, { profilePicture: publicId });
 
         // Return early if we only had a file
         if (!bio) {
@@ -47,7 +48,7 @@ export async function PATCH(
     
     if (bio) {
       try {
-        await User.findByIdAndUpdate(params.id, { bio });
+        await User.findByIdAndUpdate(id, { bio });
         return NextResponse.json({ message: "Bio updated successfully" });
       } catch (error) {
         console.error("Error updating bio:", error);
@@ -93,7 +94,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
 }
 
 
-export async function DELETE(request: NextRequest, {params}:{params: {id: string}}) {
+export async function DELETE(request: NextRequest, {params}:{params: Promise<{id: string}>}) {
   try {
     const {id} = await params;
     const client = await clerkClient()
